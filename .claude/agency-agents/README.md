@@ -60,3 +60,17 @@ The six reviewer roles and `loop-verifier` must report exactly `Read, Grep, Glob
 ## Updating
 
 Fetch the same paths at a newer revision, re-apply the `tools:` line to the six reviewer roles, and update the revision and hashes in this file in the same commit.
+
+## Local change: automatic delegation (2026-11-22)
+
+One sentence beginning "Use proactively" was appended to the `description:` line of every Agency Agents role in `.claude/agents/` (not to `loop-verifier`). Claude Code uses that field to decide when to delegate, so the roles now run during ticket work without being named. Nothing else in the role files changed.
+
+This supersedes any statement above that a role file is unmodified or that the `tools:` line is the only local change. To compare a role with the pinned upstream file, remove that sentence (and the `tools:` line where one was added) first.
+
+The steps at which each role runs are in `.claude/skills/implement-ticket/SKILL.md`.
+
+A section headed "In this repository" was then inserted directly after the frontmatter of every Agency Agents role (not into `loop-verifier`), before the upstream text. It is project-specific text written for this repository, not upstream text. Because the repository has no application code yet, each section describes the planned stack, modules and commands from the technical specification and says they are planned. Each section ends with the sentence "This section and CLAUDE.md override the generic text below wherever they differ." The upstream text below it and the rest of the frontmatter are unchanged.
+
+To compare a role with the pinned upstream file, remove the "Use proactively" sentence (and the full stop added in front of it where the upstream description has none), the section "In this repository" together with the blank line after it, and the `tools:` line where one was added. Re-check the sections against the code once it exists.
+
+Loading check: not run in this stage (`claude -p` was skipped on purpose to spare memory). Run the command under "Check that the roles load" before relying on the roles.
