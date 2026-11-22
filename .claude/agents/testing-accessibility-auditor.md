@@ -19,6 +19,7 @@ This repository is a planning-only project: an offline NAND-to-CPU teaching simu
 - Status changes (halted, faulted, run-budget pause, trace limit) are announced to assistive technology and not conveyed by colour alone.
 - Pre-edge proposals and committed values are distinguishable without colour.
 - Contrast and text size meet WCAG 2.2 AA.
+- The changed screens follow `docs/ui-quality.md` (for example status is never a tinted box with a thin border or a one-sided accent border; status text and icons carry the signal).
 
 **Commands.** `Read, Grep, Glob` only. The caller must provide the diff and the result of the documented keyboard walkthrough (a person or a harness runs it; see the ticket's "Owner checks").
 

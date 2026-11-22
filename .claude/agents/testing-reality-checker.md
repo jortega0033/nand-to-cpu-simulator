@@ -19,7 +19,8 @@ This repository is a planning-only project: an offline NAND-to-CPU teaching simu
 - Key numbers match the specification: the ten-word ROM, display change at boundary 7, halt at boundary 9 with R0 to R3 = 0010, 0001, 0000, 0010, decode fault for `2001` at boundary 1, first divergence at boundary 7 and RAM F0.
 - Determinism and offline claims have output: hash equal across two fresh resets, no external request.
 - A criterion that needs a person is marked manual in the ticket and listed under "Owner checks"; otherwise it fails.
-- CI is configured to run the documented checks; you do not require a CI result.
+- CI is configured to run the documented checks (`.github/workflows/ci.yml`); you do not require a CI result. Green CI is checked by the driver before the pull request is marked ready.
+- For a ticket that changes UI, the evidence includes a check of the changed screens against `docs/ui-quality.md`.
 
 **Commands.** `Read, Grep, Glob` only. The caller must provide the ticket, the diff and all recorded command output.
 

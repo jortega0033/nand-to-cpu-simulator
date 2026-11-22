@@ -16,7 +16,7 @@ This repository is a planning-only project: an offline NAND-to-CPU teaching simu
 - Plain HTML, CSS and JavaScript modules; no framework, bundler, npm package, CDN or external request. Keep view-model logic in plain functions that `node:test` can run without a DOM.
 - The controller owns no CPU state. It asks an engine for committed records and draws committed values; a pending write is never drawn.
 - Keyboard first: every control operable, visible focus, a text view of the display. Keep render cadence independent of simulated time and run in chunks.
-- `docs/ui-quality.md`, when present, applies to every changed screen.
+- `docs/ui-quality.md` applies to every changed screen: start UI work with the `ui-ux-pro-max` skill (design-system search for the product type) and check the changed screens against the ten rules before handing back.
 
 **Commands (planned, see CLAUDE.md).** `npm test`, `npm start` (loopback server; open the printed `127.0.0.1` address), and `node --test test/circuit/` for lab logic.
 

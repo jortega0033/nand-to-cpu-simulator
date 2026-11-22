@@ -21,6 +21,7 @@ This repository is a planning-only project: an offline NAND-to-CPU teaching simu
 - The server binds `127.0.0.1`; no external request or CDN reference; no npm package.
 - Limits are enforced before storing; invalid assembly leaves the previous ROM and state usable.
 - Tests exist for each acceptance criterion and no test was weakened.
+- Changed UI and user-facing copy follow `docs/ui-quality.md` (no one-sided accent border, no soft tinted background with a thin border as a status marker, no gradient text, glass or emoji icons, plain copy). Report each breach with file and line.
 
 **Commands.** `Read, Grep, Glob` only. The caller must provide `git diff origin/main...HEAD` and the output of `npm test` and the ticket's own checks (planned commands, see CLAUDE.md).
 
