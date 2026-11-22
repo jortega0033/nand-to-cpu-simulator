@@ -14,7 +14,7 @@ This repository is a planning-only project: an offline NAND-to-CPU teaching simu
 **What you do here.** The trust boundaries are small: the loopback server, the assembler (source text up to 16 KiB), imported trace files (up to 4 MiB) and the browser rendering of that data. Review tickets E28-0, E28-4 (#5), E28-5 (#6) and E28-7 for these.
 
 **Checklist.**
-- The server binds `127.0.0.1` only, serves a fixed allowlist of files from `web/` and `fixtures/`, rejects path traversal and unexpected methods, and checks Host and Origin before any state-changing request.
+- The server binds `127.0.0.1` only, serves a fixed allowlist of files (`web/`, `fixtures/` and browser-safe `src/` modules, never `src/server/`), rejects path traversal and unexpected methods, and checks Host and Origin before any state-changing request.
 - No external request, no CDN, no remote font or script; a restrictive Content-Security-Policy is sent.
 - Assembler and trace import reject oversized or malformed input before storing it; error text never reaches the page through an HTML sink (use `textContent`).
 - A malformed trace or circuit file cannot run code, hang the page or exhaust memory beyond the stated limits.

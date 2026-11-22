@@ -13,6 +13,7 @@ Status: planned. Nothing here is implemented. The behaviour is specified in [TEC
 | `src/asm/` | Two-pass assembler, diagnostics, source-to-ROM mapping | `src/isa/` |
 | `src/trace/` | Record export, canonical hash, checkpoints, seek, limits | `src/isa/` |
 | `src/compare/` | First-divergence comparator | `src/isa/`, `src/trace/` |
+| `src/stub/` | Temporary replay engine for the walking skeleton, deleted when the reference interpreter lands | `src/isa/` |
 | `src/server/` | Loopback static server | Node standard library only |
 | `web/` | Browser files, controller, views | engine contract only, through the controller |
 
