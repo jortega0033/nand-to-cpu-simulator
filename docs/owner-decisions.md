@@ -21,15 +21,15 @@ All entries are dated 2026-11-22.
 
 ## Entry 10: decisions settled with the ticket default
 
-Issue numbers: E28-0 and E28-7 are new tickets whose numbers GitHub assigns on creation; the epic text lists the numbers.
+Issue numbers: E28-0 is #8 and E28-7 is #9; the epic table lists them.
 
 - D1 (epic #1): no licence file is added; README keeps "has not been selected". Not blocking.
-- D2 (E28-0): minimum Node 22, recorded in `package.json` `engines` and README; no claim for other versions.
-- D3 (E28-0, #6, #7): no browser harness and no package; view logic is tested in Node; the real-browser keyboard walkthrough is an owner check.
+- D2 (#8): minimum Node 22, recorded in `package.json` `engines` and README; no claim for other versions.
+- D3 (#8, #6, #7): no browser harness and no package; view logic is tested in Node; the real-browser keyboard walkthrough is an owner check.
 - D4 (#4): seed 28, 200 programs of at most 32 instructions, own xorshift generator, coverage minimums printed.
-- D5 (E28-7): full RAM snapshot at reset and every 256 committed boundaries.
-- D6 (E28-7): JSON Lines trace format; the canonical hash is SHA-256 of the exact bytes.
+- D5 (#9): full RAM snapshot at reset and every 256 committed boundaries.
+- D6 (#9): JSON Lines trace format; the canonical hash is SHA-256 of the exact bytes.
 - D7 (#6): each Run uses a budget of 1,000 boundaries, resume adds 1,000, hard cap 10,000.
 - D8 (#5): mnemonics and registers case-insensitive, labels case-sensitive ASCII, at most 20 diagnostics.
-- D9 (E28-0): default port 8280; `--port 0` picks a free port.
+- D9 (#8): default port 8280; `--port 0` picks a free port.
 - D10 (all): the technical specification text is the contract for reset and commit-edge semantics; if it is ambiguous, stop and comment on the issue.

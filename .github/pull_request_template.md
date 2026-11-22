@@ -34,4 +34,4 @@ Steps that need a person (for example the keyboard walkthrough in a normal brows
 - [ ] CI is green
 - [ ] CHANGELOG.md has a line for this ticket
 - [ ] User-facing copy and docs went through the unslop skill; UI changes were checked against docs/ui-quality.md
-- [ ] No agent configuration, CI or hook files changed (or the change is the ticket)
+- [ ] No agent configuration, CI or hook files changed
