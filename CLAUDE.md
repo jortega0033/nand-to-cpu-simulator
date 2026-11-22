@@ -99,7 +99,7 @@ Loop Engineering is installed at L1, report-only, unscheduled. See [LOOP.md](LOO
 
 ## Ticket implementation: agent roles run automatically
 
-The project subagents live in `.claude/agents/`: Agency Agents roles at a pinned revision, with provenance and local changes in [.claude/agency-agents/README.md](.claude/agency-agents/README.md). Each role file starts with an "In this repository" section written for this project (planned stack, modules and commands, marked as planned until the code exists). Reviewer roles are read-only (`tools: Read, Grep, Glob`): give them the diff, the acceptance criteria and the recorded command output as files the driver writes to `.claude/state/review/` (diff stat, diff against `origin/main`, check outputs) and names in the request.
+The project subagents live in `.claude/agents/`: Agency Agents roles at a pinned revision, with provenance and local changes in [.claude/agency-agents/README.md](.claude/agency-agents/README.md). Each role file starts with an "In this repository" section written for this project (planned stack, modules and commands, marked as planned until the code exists). Reviewer roles are read-only (`tools: Read, Grep, Glob`): the driver (`/next-ticket` step 4.2 or the playbook) writes the diff stat, the diff against `origin/main`, the acceptance criteria and the check outputs to `.claude/state/review/` and names those files in the request; the reviewers read the diff and evidence from there.
 
 When asked to implement, continue or finish a GitHub issue, follow the playbook in [`.claude/skills/implement-ticket/SKILL.md`](.claude/skills/implement-ticket/SKILL.md). Claude Code loads it on its own for ticket work; `/implement-ticket <issue number>` starts it by hand.
 

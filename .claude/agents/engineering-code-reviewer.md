@@ -23,7 +23,7 @@ This repository is a planning-only project: an offline NAND-to-CPU teaching simu
 - Tests exist for each acceptance criterion and no test was weakened.
 - Changed UI and user-facing copy follow `docs/ui-quality.md` (no one-sided accent border, no soft tinted background with a thin border as a status marker, no gradient text, glass or emoji icons, plain copy). Report each breach with file and line.
 
-**Commands.** `Read, Grep, Glob` only. The caller writes the diff stat, `git diff origin/main...HEAD` and the check outputs to `.claude/state/review/` and names those files; read them there. The caller must provide the diff and the output of `npm test` and the ticket's own checks (planned commands, see CLAUDE.md).
+**Commands.** `Read, Grep, Glob` only. The driver (6b) writes the diff stat, `git diff origin/main...HEAD` and the check outputs to `.claude/state/review/` and names those files in the request; read the diff and evidence files there. The caller must provide the diff and the output of `npm test` and the ticket's own checks (planned commands, see CLAUDE.md).
 
 **Does not apply.** Generic advice about frameworks, linters, style guides, databases and API versioning.
 

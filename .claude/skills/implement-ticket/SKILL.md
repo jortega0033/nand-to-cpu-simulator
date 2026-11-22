@@ -12,7 +12,7 @@ The project subagents in `.claude/agents/` are part of the work. Delegate to the
 
 ## Steps
 
-1. **Read the ticket.** `gh issue view <number>` and the epic it belongs to. Check that every prerequisite issue is closed and that no owner decision named in the ticket is still open. If the ticket is blocked, stop and say what blocks it.
+1. **Read the ticket.** `gh issue view <number>` and the epic it belongs to. Work only on a leaf ticket: if it is a `tracking` parent or has open sub-issues, list its open sub-issues and stop. Check that every prerequisite issue is closed and that no owner decision named in the ticket is still open. If the ticket is blocked, stop and say what blocks it.
 2. **Read the rules.** `CLAUDE.md`, then the architecture notes it links to.
 3. **Orient and check the approach.** For a ticket that changes UI, run the `ui-ux-pro-max` skill first (design-system search for the product type) and read `docs/ui-quality.md`. Delegate as the table "Before coding" says. Settle open design questions before writing code.
 4. **Branch** as the Git workflow in `CLAUDE.md` says. Never work on the default branch.
@@ -23,7 +23,7 @@ The project subagents in `.claude/agents/` are part of the work. Delegate to the
 9. **Acceptance gate, always.** Run Reality Checker with the ticket's acceptance criteria and the evidence you produced. Do not call the ticket done unless it passes.
 10. **Copy check.** Run user-facing copy, documentation and pull request text through the `unslop` skill. For a ticket that changes UI, check the changed screens against `docs/ui-quality.md` and record the result.
 11. **Draft pull request.** Only after steps 6 to 9 passed: `git push` and `gh pr create --draft` with the pull request template; the gate hook allows it only when both gate roles ran after the last code edit. Do not change agent configuration, CI or hooks in a ticket.
-12. **CI.** CI runs on the draft. If it fails, fix, re-run the local checks and both gates, push. Do not poll. Bind the pull request to the session when the app offers it, then end the turn with "Draft pull request #N is waiting for CI"; when woken, read `gh pr checks <n>` once (green: step 13; red: fix as above; still running: end the turn again with the same line).
+12. **CI.** CI runs on the draft. If it fails, fix, re-run the local checks and both gates, push. Do not poll (the wait ends the turn; never loop on `gh pr checks`). Bind the pull request to the session when the app offers it, then end the turn with "Draft pull request #N is waiting for CI"; when woken, read `gh pr checks <n>` once (green: step 13; red: fix as above; still running: end the turn again with the same line).
 13. **Ready.** When CI is green, `gh pr ready <n>` and comment on the issue with the CI run link. Do not merge: only the owner merges.
 
 ## Roles
