@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+  # The technical specification plans no third-party npm packages, but the
+  # walking-skeleton ticket (E28-0) adds package.json. Dependabot watches it
+  # from then on, so a later dependency would be noticed.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
