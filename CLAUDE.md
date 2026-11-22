@@ -1,0 +1,90 @@
+# CLAUDE.md
+
+Instructions for coding agents working in this repository. Read this first, then the documents it links to.
+
+## State of the repository
+
+Planning only. There is no application code, no `package.json`, no test and no CI result yet. Everything below that describes a command, a directory or a module is **planned**: it is what the plan and the technical specification call for, and it becomes real only when the named ticket merges. Do not report a planned command as working, and do not claim a check passed unless you ran it.
+
+## Product
+
+An offline, original teaching simulator in Node.js. A learner follows a program from NAND gates through a 16-bit ripple adder, a 16-bit instructional CPU and an assembler to a 16x16 monochrome browser display. A gate-derived CPU is compared with an independently written reference interpreter, and the first divergent instruction boundary is reported.
+
+## Source of truth
+
+| Document | What it settles |
+|---|---|
+| [docs/PRD.md](docs/PRD.md) | Product requirements, first working slice, epic success, scope, epic E28 and its tickets. |
+| [docs/TECHNICAL_SPEC.md](docs/TECHNICAL_SPEC.md) | Runtime and ownership, NAND-derived components and clock, ISA and state contract, assembler, record format, bounds, fixtures and the first-walkthrough ROM. |
+| [docs/architecture.md](docs/architecture.md) | Planned implementer map: modules, dependency direction, what is shared and what must stay independent. |
+| GitHub epic #1 and its tickets | The current backlog: scope, dependencies, acceptance criteria and estimates. A ticket refines the documents above; if they disagree, stop and flag it in the issue. |
+
+Numbers in the fixtures (words, boundaries, pixel (11,0), limits) are acceptance targets taken from the technical specification. They are not evidence that anything works.
+
+## Stack and constraints (from the technical specification)
+
+- Node.js, plain ECMAScript modules (`.js` with `"type": "module"`), standard library only. No npm package, no bundler, no build step, no TypeScript, no CDN reference. The default lab has no package-download step.
+- The browser files are served by a loopback-only process written with the Node standard library (bind `127.0.0.1`). The default browser experience makes no external request.
+- Tests use the standard library (`node:test`, `node:assert`). Verified browser behaviour follows documented keyboard steps; a local browser harness is allowed only after its availability is checked and it adds no package dependency.
+- The gate-derived CPU and the reference interpreter are independent modules. They share only the input and state schemas, the instruction definitions and the bit-width rules. They must not share decode, arithmetic, branch or state-transition helpers.
+- The browser shows authored lab data and sends user actions to a small controller. The browser does not own CPU state.
+- Authored content only: examples, circuits, ROMs and fixtures are written for this project. Record provenance before adopting anything from outside. No existing game assets, no matching proprietary interface.
+- Determinism: fixed field order, unsigned normalized values, canonical output hashes equal across two fresh resets.
+- Limits to enforce, detected before oversized records are stored: 256 words per program, 16 KiB source, 10,000 committed boundaries per run, 4 MiB exported trace, 32 waveform rows. Continuous execution runs in chunks so the UI stays responsive; rendering cadence is independent of simulated time.
+- Node and browser versions are not pinned. The walking-skeleton ticket records the versions actually used; do not claim portability beyond them.
+
+## Commands (all planned)
+
+Nothing here runs today. Names are proposed by the plan; the ticket that introduces a command may adjust the name and must then update this table in the same pull request.
+
+| Purpose | Command | Introduced by |
+|---|---|---|
+| Setup | none: no install step. Check `node --version`. | E28-0 walking skeleton (new ticket) records the version |
+| Test | `npm test` (runs `node --test`) | E28-0 makes it real; every later ticket extends it |
+| Run the lab | `npm start` (runs `node src/server/main.js`, binds `127.0.0.1`) | E28-0 |
+| Circuit suite | `node --test test/circuit/` | E28-1 (#2) |
+| ISA and reference checks | `node --test test/isa/ test/reference/` | E28-2 (#3) |
+| Gate CPU and comparator checks | `node --test test/gate/ test/compare/` | E28-3 (#4) |
+| Assemble a file | `node src/asm/cli.js <file.asm>` | E28-4 (#5) |
+| Trace, replay and limits checks | `node --test test/trace/` | E28-7 (new ticket) |
+| Offline walkthrough | `node scripts/walkthrough.js` | E28-6 (#7) |
+| Benchmark | `node scripts/bench.js` | E28-6 (#7) |
+
+## Planned layout
+
+Short version; the detail and the dependency rules are in [docs/architecture.md](docs/architecture.md).
+
+- `src/isa/`: instruction definitions, bit-width rules, state and record schemas (the only code both CPU models may import).
+- `src/reference/`: instruction-level reference interpreter.
+- `src/circuit/`, `src/gate/`: NAND network, derived blocks, clock and register boundary; the gate-derived datapath and CPU.
+- `src/asm/`: two-pass assembler, diagnostics, source mapping, command line.
+- `src/trace/`: committed records, export, canonical hash, checkpoints, seek, limits.
+- `src/compare/`: boundary-by-boundary comparator and divergence report.
+- `src/server/`: loopback static server. `web/`: browser files and the controller. `fixtures/`: circuit schema, assembly and trace fixtures. `test/`: tests. `scripts/`: walkthrough and benchmark.
+
+## Git workflow
+
+- Never work on `main`. One branch per ticket, named `ticket/<issue-number>-<short-slug>`, from the current `origin/main`.
+- Small commits with an imperative subject. Open a pull request to `main` that names the issue (`Closes #N`). Only the owner merges and releases. Do not push to `main`, force-push, merge, tag or publish.
+- Stay inside the ticket's stated scope. Note anything else you find as a follow-up in the pull request instead of widening the change.
+- Documentation-only and planning changes follow the same branch and pull-request rule.
+
+## Evidence before a ticket is called done
+
+Capture, in the pull request description, each command you ran and its observed result:
+
+1. The test command, plus every check the ticket's verification section lists, run locally and passing. For a planned command that does not exist yet, the ticket that introduces it must make it real in the same pull request.
+2. Each acceptance criterion mapped to the test, fixture or manual step that proves it. A criterion that needs a person (a keyboard walkthrough in a normal browser) is done as far as an agent can and the rest is listed under "Owner checks"; say which.
+3. Determinism and offline checks the ticket touches: canonical hash equal across two fresh resets, no external request.
+4. A statement of what was not run or not verified.
+5. Review gates, in this order: local checks pass; Code Reviewer reviews the full diff and the recorded output; Reality Checker compares each criterion with the evidence; only then open the draft pull request. CI runs on the draft; fix and re-run on a red result. Mark it ready only when CI is green. CI is installed outside the tickets; until the walking-skeleton ticket makes `npm test` real, CI carries a guard for the missing test command, and that ticket removes the guard.
+
+Never write "done", "passing" or "verified" without the command and its output.
+
+## Agent roles
+
+The project subagents live in `.claude/agents/` (Agency Agents roles at a pinned revision; provenance and local changes are in [.claude/agency-agents/README.md](.claude/agency-agents/README.md)). Reviewer roles are read-only (`tools: Read, Grep, Glob`): give them the diff, the acceptance criteria and the recorded command output.
+
+## Loop
+
+Loop Engineering is installed at L1, report-only, unscheduled. See [LOOP.md](LOOP.md). Ticket work is not a loop run.

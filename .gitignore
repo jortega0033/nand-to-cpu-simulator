@@ -11,3 +11,7 @@ dist/
 *.sqlite3
 *.db
 .DS_Store
+
+# Claude Code local state
+.claude/state/
+.claude/worktrees/
