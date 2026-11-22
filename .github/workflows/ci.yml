@@ -28,9 +28,10 @@ jobs:
           node-version: ${{ matrix.node }}
       - name: Review gate hook self-test
         run: node .claude/hooks/role-gate.mjs --self-test
-      # GUARD: the application does not exist yet. The walking-skeleton ticket
-      # (plan ID E28-0, "walking skeleton") makes `npm test` real and must
-      # remove this guard (the `if:` line) in the same pull request.
+      # GUARD: the application does not exist yet. This step is skipped until
+      # `package.json` exists (the walking-skeleton ticket, plan ID E28-0, adds
+      # it), and then runs by itself. No ticket edits this file; only the owner
+      # may later delete the `if:` line.
       - name: Test (npm test)
         if: ${{ hashFiles('package.json') != '' }}
         run: npm test

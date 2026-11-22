@@ -31,7 +31,7 @@ Labels: `status:ready`, `status:blocked`, `status:in-progress`, `needs-decision`
 
 ## 4. Gates, pull request and CI (fixed order)
 
-1. Local checks pass (`npm test` and the ticket's own checks, once they exist) with their output recorded.
+1. Local checks pass (`npm test` and the ticket's own checks, once they exist) with their output recorded, and the ticket's `CHANGELOG.md` line is already in the diff.
 2. Write the reviewer inputs to the worktree's `.claude/state/review/`: `git diff --stat origin/main...HEAD`, `git diff origin/main...HEAD`, and the check outputs. Code Reviewer and Reality Checker have no shell: name these files in the request. Run Code Reviewer, then Reality Checker. Reality Checker checks that the documented checks ran locally and passed and that CI is configured to run them; it does not require a CI result.
 3. Only then `git push` and `gh pr create --draft` with the template. The gate hook allows it because both gates ran after the last code edit. If the ticket is the last open sub-issue of a parent, the body says `Closes #<sub-issue>` and `Closes #<parent>`; otherwise `Closes #<issue>`.
 4. CI runs on the draft. Do not poll, loop or sleep. Bind the pull request to the session when the app offers it, and end the turn with the line "Draft pull request #N is waiting for CI". When woken (a CI event, or the owner says "continue"), read `gh pr checks <n>` once: green, go to step 5; red, fix, re-run local checks and both gates, push; still running, end the turn again with the same line.

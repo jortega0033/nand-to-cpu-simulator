@@ -18,7 +18,7 @@ This repository is a planning-only project: an offline NAND-to-CPU teaching simu
 - Enumerate expected values independently of the code under test; a seeded generator uses a fixed documented seed. Tests are deterministic and never depend on wall-clock time.
 - Never weaken or delete a test to pass.
 
-**Commands (planned, see CLAUDE.md).** `npm test` and the per-area `node --test test/<area>/` commands.
+**Commands (planned, see CLAUDE.md).** `npm test` and the per-area commands of the form `node --test "test/<area>/**/*.test.js"` (quoted glob, expanded by Node 22 itself; a bare directory argument fails on Node 22).
 
 **Does not apply.** Page objects, trace viewers, CI sharding and cloud test grids from the generic text.
 

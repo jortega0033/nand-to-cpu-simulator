@@ -17,7 +17,7 @@ An offline, original teaching simulator in Node.js. A learner follows a program 
 | [docs/PRD.md](docs/PRD.md) | Product requirements, first working slice, epic success, scope, epic E28 and its tickets. |
 | [docs/TECHNICAL_SPEC.md](docs/TECHNICAL_SPEC.md) | Runtime and ownership, NAND-derived components and clock, ISA and state contract, assembler, record format, bounds, fixtures and the first-walkthrough ROM. |
 | [docs/architecture.md](docs/architecture.md) | Planned implementer map: modules, dependency direction, what is shared and what must stay independent. |
-| GitHub epic #1 and its tickets | The current backlog: scope, dependencies, acceptance criteria and estimates. A ticket refines the documents above; if they disagree, stop and flag it in the issue. |
+| GitHub epic #1 and its tickets | The current backlog: scope, dependencies, acceptance criteria and estimates. A ticket refines the documents above. Epic #1 supersedes the PRD's ticket table, estimates and sequencing (see "Backlog drift" in [docs/architecture.md](docs/architecture.md)); a ticket that contradicts the *behaviour* in the technical specification is different: stop and flag it in the issue. |
 
 Numbers in the fixtures (words, boundaries, pixel (11,0), limits) are acceptance targets taken from the technical specification. They are not evidence that anything works.
 
@@ -42,11 +42,11 @@ Nothing here runs today. Names are proposed by the plan; the ticket that introdu
 | Setup | none: no install step. Check `node --version`. | E28-0 walking skeleton (new ticket) records the version |
 | Test | `npm test` (runs `node --test`) | E28-0 makes it real; every later ticket extends it |
 | Run the lab | `npm start` (runs `node src/server/main.js`, binds `127.0.0.1`) | E28-0 |
-| Circuit suite | `node --test test/circuit/` | E28-1 (#2) |
-| ISA and reference checks | `node --test test/isa/ test/reference/` | E28-2 (#3) |
-| Gate CPU and comparator checks | `node --test test/gate/ test/compare/` | E28-3 (#4) |
+| Circuit suite | `node --test "test/circuit/**/*.test.js"` | E28-1 (#2) |
+| ISA and reference checks | `node --test "test/isa/**/*.test.js" "test/reference/**/*.test.js"` | E28-2 (#3) |
+| Gate CPU and comparator checks | `node --test "test/gate/**/*.test.js" "test/compare/**/*.test.js"` | E28-3 (#4) |
 | Assemble a file | `node src/asm/cli.js <file.asm>` | E28-4 (#5) |
-| Trace, replay and limits checks | `node --test test/trace/` | E28-7 (new ticket) |
+| Trace, replay and limits checks | `node --test "test/trace/**/*.test.js"` | E28-7 (new ticket) |
 | Offline walkthrough | `node scripts/walkthrough.js` | E28-6 (#7) |
 | Benchmark | `node scripts/bench.js` | E28-6 (#7) |
 
@@ -77,7 +77,7 @@ Capture, in the pull request description, each command you ran and its observed 
 2. Each acceptance criterion mapped to the test, fixture or manual step that proves it. A criterion that needs a person (a keyboard walkthrough in a normal browser) is done as far as an agent can and the rest is listed under "Owner checks"; say which.
 3. Determinism and offline checks the ticket touches: canonical hash equal across two fresh resets, no external request.
 4. A statement of what was not run or not verified.
-5. Review gates, in this order: local checks pass; Code Reviewer reviews the full diff and the recorded output; Reality Checker compares each criterion with the evidence; only then open the draft pull request. CI runs on the draft; fix and re-run both gates on a red result. Mark it ready only when CI is green (the driver checks this; Reality Checker does not need a CI result). CI is installed outside the tickets; until the walking-skeleton ticket makes `npm test` real, CI carries a guard for the missing test command, and that ticket removes the guard.
+5. Review gates, in this order: local checks pass; Code Reviewer reviews the full diff and the recorded output; Reality Checker compares each criterion with the evidence; only then open the draft pull request. CI runs on the draft; fix and re-run both gates on a red result. Mark it ready only when CI is green (the driver checks this; Reality Checker does not need a CI result). CI is installed outside the tickets; until the walking-skeleton ticket adds `package.json`, CI skips `npm test` through a guard (`if: hashFiles('package.json') != ''`). The guard turns itself off once `package.json` exists, so no ticket edits CI; only the owner may later delete the `if:` line.
 6. For a ticket that changes UI: the changed screens were checked against `docs/ui-quality.md`. User-facing copy and docs went through the `unslop` skill.
 
 Never write "done", "passing" or "verified" without the command and its output.
@@ -87,7 +87,7 @@ Never write "done", "passing" or "verified" without the command and its output.
 - **Start:** only the owner starts ticket work, with `/next-ticket [issue]` ([`.claude/skills/next-ticket/SKILL.md`](.claude/skills/next-ticket/SKILL.md)). There is no scheduler. Playbook: [`.claude/skills/implement-ticket/SKILL.md`](.claude/skills/implement-ticket/SKILL.md).
 - **Review gate hook:** [`.claude/hooks/role-gate.mjs`](.claude/hooks/role-gate.mjs) blocks `gh pr create` and `gh pr ready` until Code Reviewer and Reality Checker ran after the last code edit. `ROLE_GATE=off` in the environment Claude Code is started from switches it off for that session; only the owner does that.
 - **Permissions:** [`.claude/settings.json`](.claude/settings.json). Documented commands are allowed; force pushes, pushes to `main`, merges, releases and reads of secrets are denied; edits to CI, agent configuration and Loop files ask first.
-- **CI:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs on Linux and Windows and must be green before a pull request is marked ready. Until E28-0 (walking skeleton) makes `npm test` real, a guard skips it; that ticket removes the guard.
+- **CI:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs on Linux and Windows and must be green before a pull request is marked ready. Until E28-0 (walking skeleton) adds `package.json`, a guard skips `npm test`; the guard becomes inactive on its own at that point, and only the owner may later delete the `if:` line. No ticket changes `.github/`.
 - **Pull requests and tickets:** [pull request template](.github/pull_request_template.md), [ticket template](.github/ISSUE_TEMPLATE/implementation-ticket.md). Labels: `status:ready`, `status:blocked`, `status:in-progress`, `needs-decision`, `tracking`. Add a line to [CHANGELOG.md](CHANGELOG.md) in every ticket pull request.
 - **Only the owner merges and releases** ([docs/RELEASING.md](docs/RELEASING.md)). Security reports: [SECURITY.md](SECURITY.md).
 - **UI and writing quality:** [docs/ui-quality.md](docs/ui-quality.md) is binding for every screen; skills `ui-ux-pro-max` (UI work) and `unslop` (copy, docs, pull request text) are installed in `.claude/skills/`.

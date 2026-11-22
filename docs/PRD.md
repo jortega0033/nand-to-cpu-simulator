@@ -82,6 +82,8 @@ Compare the first run and a fresh reset run using canonical output hashes. Test 
 
 ## Epic E28 · Explain a complete program from NAND gates to a browser display
 
+> **Note (2026-11-22): the ticket table below is superseded by GitHub epic #1.** The backlog now has eight tickets, not six: E28-0 (walking skeleton) and E28-7 (committed records, trace export, checkpoints, replay and limits) were added, E28-1 and E28-2 depend on E28-0, E28-5 depends on E28-4 and E28-7, and the total estimate is higher than the sum shown here. The first working slice (NAND, then adder, then the four phases) is delivered by E28-0 plus E28-1. Product requirements and the technical specification are unchanged. See "Backlog drift" in [architecture.md](architecture.md).
+
 The epic delivers an original assembly fixture that can be examined at both circuit and architectural levels. It is complete when a clean offline run passes the truth-table, cycle, assembler, fixture equivalence, fault, and browser checks above.
 
 | Ticket | Depends on | Estimate |

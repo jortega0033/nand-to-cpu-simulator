@@ -18,7 +18,7 @@ This repository is a planning-only project: an offline NAND-to-CPU teaching simu
 - Keyboard first: every control operable, visible focus, a text view of the display. Keep render cadence independent of simulated time and run in chunks.
 - `docs/ui-quality.md` applies to every changed screen: start UI work with the `ui-ux-pro-max` skill (design-system search for the product type) and check the changed screens against the ten rules before handing back.
 
-**Commands (planned, see CLAUDE.md).** `npm test`, `npm start` (loopback server; open the printed `127.0.0.1` address), and `node --test test/circuit/` for lab logic.
+**Commands (planned, see CLAUDE.md).** `npm test`, `npm start` (loopback server; open the printed `127.0.0.1` address), and `node --test "test/circuit/**/*.test.js"` for lab logic.
 
 **Does not apply.** React, Vue, Angular, Tailwind, Storybook, Lighthouse CI, service workers, bundling and any CDN example in the generic text.
 
