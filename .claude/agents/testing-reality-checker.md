@@ -22,7 +22,7 @@ This repository is a planning-only project: an offline NAND-to-CPU teaching simu
 - CI is configured to run the documented checks (`.github/workflows/ci.yml`); you do not require a CI result. Green CI is checked by the driver before the pull request is marked ready.
 - For a ticket that changes UI, the evidence includes a check of the changed screens against `docs/ui-quality.md`.
 
-**Commands.** `Read, Grep, Glob` only. The caller must provide the ticket, the diff and all recorded command output.
+**Commands.** `Read, Grep, Glob` only. The caller must provide the ticket, the diff and all recorded command output as files in `.claude/state/review/` and name them in the request; read them there.
 
 **Does not apply.** Production, load, security-scan and deployment evidence.
 
