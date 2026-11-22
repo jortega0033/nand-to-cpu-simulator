@@ -1,0 +1,36 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: test (${{ matrix.os }}, node ${{ matrix.node }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: ['22']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Review gate hook self-test
+        run: node .claude/hooks/role-gate.mjs --self-test
+      # GUARD: the application does not exist yet. The walking-skeleton ticket
+      # (plan ID E28-0, "walking skeleton") makes `npm test` real and must
+      # remove this guard (the `if:` line) in the same pull request.
+      - name: Test (npm test)
+        if: ${{ hashFiles('package.json') != '' }}
+        run: npm test
