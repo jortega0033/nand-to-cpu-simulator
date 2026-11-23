@@ -91,7 +91,7 @@ Never write "done", "passing" or "verified" without the command and its output.
 - **CI:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs on Linux and Windows and must be green before a pull request is marked ready. It runs `npm test` on both systems (the scaffold removed the guard). No ticket changes `.github/`.
 - **Pull requests and tickets:** [pull request template](.github/pull_request_template.md), [ticket template](.github/ISSUE_TEMPLATE/implementation-ticket.md). Labels: `status:ready`, `status:blocked`, `status:in-progress`, `needs-decision`, `tracking`. Add a line to [CHANGELOG.md](CHANGELOG.md) in every ticket pull request.
 - **Only the owner merges and releases** ([docs/RELEASING.md](docs/RELEASING.md)). Security reports: [SECURITY.md](SECURITY.md).
-- **UI and writing quality:** [docs/ui-quality.md](docs/ui-quality.md) is binding for every screen; skills `ui-ux-pro-max` (UI work) and `unslop` (copy, docs, pull request text) are installed in `.claude/skills/`.
+- **UI and writing quality:** [docs/ui-quality.md](docs/ui-quality.md) is binding for every screen; skills `ui-ux-pro-max` (UI work) and `unslop` (copy, docs, pull request text) are installed in `.claude/skills/`. Colours and spacing come from `web/tokens.css`; see [docs/design-tokens.md](docs/design-tokens.md) (no new colour literals).
 - **Owner decisions** are recorded in [docs/owner-decisions.md](docs/owner-decisions.md). An agent that finds one blocking a ticket stops and says so.
 
 ## Loop
