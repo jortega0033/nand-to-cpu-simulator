@@ -4,7 +4,7 @@ Instructions for coding agents working in this repository. Read this first, then
 
 ## State of the repository
 
-Planning only. There is no application code, no `package.json`, no test and no CI result yet. Everything below that describes a command, a directory or a module is **planned**: it is what the plan and the technical specification call for, and it becomes real only when the named ticket merges. Do not report a planned command as working, and do not claim a check passed unless you ran it.
+Scaffold only. `package.json` (no dependencies), the module folders under `src/`, the smoke tests and the CI test step exist, and `npm test` runs. No product behaviour exists: every module is an empty header and the entry points print their usage or exit with "not implemented yet: see #N". Commands marked **planned** below are what the plan and the technical specification call for and become real only when the named ticket merges. Do not report a planned command as working, and do not claim a check passed unless you ran it.
 
 ## Product
 
@@ -33,26 +33,27 @@ Numbers in the fixtures (words, boundaries, pixel (11,0), limits) are acceptance
 - Limits to enforce, detected before oversized records are stored: 256 words per program, 16 KiB source, 10,000 committed boundaries per run, 4 MiB exported trace, 32 waveform rows. Continuous execution runs in chunks so the UI stays responsive; rendering cadence is independent of simulated time.
 - Node and browser versions are not pinned. The walking-skeleton ticket records the versions actually used; do not claim portability beyond them.
 
-## Commands (all planned)
+## Commands
 
-Nothing here runs today. Names are proposed by the plan; the ticket that introduces a command may adjust the name and must then update this table in the same pull request.
+Rows marked real run today (scaffold). Rows marked planned do not. Names are proposed by the plan; the ticket that introduces a command may adjust the name and must then update this table in the same pull request.
 
-| Purpose | Command | Introduced by |
+| Purpose | Command | Status |
 |---|---|---|
-| Setup | none: no install step. Check `node --version`. | E28-0 walking skeleton (new ticket) records the version |
-| Test | `npm test` (runs `node --test`) | E28-0 makes it real; every later ticket extends it |
-| Run the lab | `npm start` (runs `node src/server/main.js`, binds `127.0.0.1`) | E28-0 |
-| Circuit suite | `node --test "test/circuit/**/*.test.js"` | E28-1 (#2) |
-| ISA and reference checks | `node --test "test/isa/**/*.test.js" "test/reference/**/*.test.js"` | E28-2 (#3) |
-| Gate CPU and comparator checks | `node --test "test/gate/**/*.test.js" "test/compare/**/*.test.js"` | E28-3 (#4) |
-| Assemble a file | `node src/asm/cli.js <file.asm>` | E28-4 (#5) |
-| Trace, replay and limits checks | `node --test "test/trace/**/*.test.js"` | E28-7 (new ticket) |
-| Offline walkthrough | `node scripts/walkthrough.js` | E28-6 (#7) |
-| Benchmark | `node scripts/bench.js` | E28-6 (#7) |
+| Setup | none: no install step. Check `node --version` (22 or newer). | real; #13 records the version used |
+| Test | `npm test` (runs `node --test`: one smoke test per module and entry point) | real (scaffold); every later ticket extends it |
+| Entry point help | `node src/server/main.js --help`, `node src/asm/cli.js --help`, `node scripts/walkthrough.js --help`, `node scripts/bench.js --help` (also `--version`) | real (scaffold) |
+| Run the lab | `npm start` (runs `node src/server/main.js`, binds `127.0.0.1`) | planned: today exits 2 with "not implemented yet: see #11" |
+| Circuit suite | `node --test "test/circuit/**/*.test.js"` | planned: E28-1 (#2) |
+| ISA and reference checks | `node --test "test/isa/**/*.test.js" "test/reference/**/*.test.js"` | planned: E28-2 (#3) |
+| Gate CPU and comparator checks | `node --test "test/gate/**/*.test.js" "test/compare/**/*.test.js"` | planned: E28-3 (#4) |
+| Assemble a file | `node src/asm/cli.js <file.asm>` | planned: E28-4 (#5) |
+| Trace, replay and limits checks | `node --test "test/trace/**/*.test.js"` | planned: E28-7 (new ticket) |
+| Offline walkthrough | `node scripts/walkthrough.js` | planned: E28-6 (#7) |
+| Benchmark | `node scripts/bench.js` | planned: E28-6 (#7) |
 
-## Planned layout
+## Layout
 
-Short version; the detail and the dependency rules are in [docs/architecture.md](docs/architecture.md).
+Created by the scaffold: `src/isa/`, `src/reference/`, `src/circuit/`, `src/gate/`, `src/trace/`, `src/compare/`, `src/asm/`, `src/server/main.js`, `scripts/`, `test/<module>/`. Not created yet: `web/`, `fixtures/`, `src/stub/` (created by #12 and #13). Short version; the detail and the dependency rules are in [docs/architecture.md](docs/architecture.md).
 
 - `src/isa/`: instruction definitions, bit-width rules, state and record schemas (the only code both CPU models may import).
 - `src/reference/`: instruction-level reference interpreter.
@@ -77,7 +78,7 @@ Capture, in the pull request description, each command you ran and its observed 
 2. Each acceptance criterion mapped to the test, fixture or manual step that proves it. A criterion that needs a person (a keyboard walkthrough in a normal browser) is done as far as an agent can and the rest is listed under "Owner checks"; say which.
 3. Determinism and offline checks the ticket touches: canonical hash equal across two fresh resets, no external request.
 4. A statement of what was not run or not verified.
-5. Review gates, in this order: local checks pass; Code Reviewer reviews the full diff and the recorded output; Reality Checker compares each criterion with the evidence (the reviewers have no shell, so write the ticket text (output of `gh issue view <n>`, including the acceptance criteria), the diff stat, the diff and the check outputs to `.claude/state/review/` and name them in the request); only then open the draft pull request. CI runs on the draft; fix and re-run both gates on a red result. Do not poll CI: bind the pull request to the session when the app offers it and end the turn with "Draft pull request #N is waiting for CI"; read `gh pr checks <n>` once when woken. Mark it ready only when CI is green (the driver checks this; Reality Checker does not need a CI result). CI is installed outside the tickets; until the walking-skeleton ticket adds `package.json`, CI skips `npm test` through a guard (`if: hashFiles('package.json') != ''`). The guard turns itself off once `package.json` exists, so no ticket edits CI; only the owner may later delete the `if:` line.
+5. Review gates, in this order: local checks pass; Code Reviewer reviews the full diff and the recorded output; Reality Checker compares each criterion with the evidence (the reviewers have no shell, so write the ticket text (output of `gh issue view <n>`, including the acceptance criteria), the diff stat, the diff and the check outputs to `.claude/state/review/` and name them in the request); only then open the draft pull request. CI runs on the draft; fix and re-run both gates on a red result. Do not poll CI: bind the pull request to the session when the app offers it and end the turn with "Draft pull request #N is waiting for CI"; read `gh pr checks <n>` once when woken. Mark it ready only when CI is green (the driver checks this; Reality Checker does not need a CI result). CI is installed outside the tickets and now runs `npm test` unconditionally (the scaffold removed the old `hashFiles('package.json')` guard); no ticket edits CI.
 6. For a ticket that changes UI: the changed screens were checked against `docs/ui-quality.md`. User-facing copy and docs went through the `unslop` skill.
 
 Never write "done", "passing" or "verified" without the command and its output.
@@ -87,7 +88,7 @@ Never write "done", "passing" or "verified" without the command and its output.
 - **Start:** only the owner starts ticket work, with `/next-ticket [issue]`, which picks leaf tickets only (a `tracking` parent or a ticket with open sub-issues is never picked; the pull request of a parent's last open sub-issue also says `Closes #<parent>`) ([`.claude/skills/next-ticket/SKILL.md`](.claude/skills/next-ticket/SKILL.md)). There is no scheduler. Playbook: [`.claude/skills/implement-ticket/SKILL.md`](.claude/skills/implement-ticket/SKILL.md).
 - **Review gate hook:** [`.claude/hooks/role-gate.mjs`](.claude/hooks/role-gate.mjs) blocks `gh pr create` and `gh pr ready` until Code Reviewer and Reality Checker ran after the last code edit. `ROLE_GATE=off` in the environment Claude Code is started from switches it off for that session; only the owner does that.
 - **Permissions:** [`.claude/settings.json`](.claude/settings.json). Documented commands are allowed; force pushes, pushes to `main`, merges, releases and reads of secrets are denied; edits to CI, agent configuration and Loop files ask first.
-- **CI:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs on Linux and Windows and must be green before a pull request is marked ready. Until E28-0 (walking skeleton) adds `package.json`, a guard skips `npm test`; the guard becomes inactive on its own at that point, and only the owner may later delete the `if:` line. No ticket changes `.github/`.
+- **CI:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs on Linux and Windows and must be green before a pull request is marked ready. It runs `npm test` on both systems (the scaffold removed the guard). No ticket changes `.github/`.
 - **Pull requests and tickets:** [pull request template](.github/pull_request_template.md), [ticket template](.github/ISSUE_TEMPLATE/implementation-ticket.md). Labels: `status:ready`, `status:blocked`, `status:in-progress`, `needs-decision`, `tracking`. Add a line to [CHANGELOG.md](CHANGELOG.md) in every ticket pull request.
 - **Only the owner merges and releases** ([docs/RELEASING.md](docs/RELEASING.md)). Security reports: [SECURITY.md](SECURITY.md).
 - **UI and writing quality:** [docs/ui-quality.md](docs/ui-quality.md) is binding for every screen; skills `ui-ux-pro-max` (UI work) and `unslop` (copy, docs, pull request text) are installed in `.claude/skills/`.

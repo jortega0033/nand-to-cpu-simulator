@@ -4,11 +4,11 @@ The full repository instructions are in [CLAUDE.md](CLAUDE.md). This file repeat
 
 ## State
 
-Planning only: no application code and no working commands yet. Commands in `CLAUDE.md` are marked as planned and are introduced by named tickets. Do not report a planned command as working.
+Scaffold only: package manifest, module folders, smoke tests and CI exist; no product behaviour yet. Commands in `CLAUDE.md` that are not real are marked as planned and are introduced by named tickets. Do not report a planned command as working.
 
 ## Test commands
 
-Planned, introduced by the walking-skeleton ticket (E28-0): `npm test`, which runs `node --test` from the repository root. Node.js standard library only; no npm packages.
+`npm test` is real (scaffold): it runs `node --test` from the repository root. Node.js standard library only; no npm packages.
 
 ## Loop conventions
 

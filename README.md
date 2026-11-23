@@ -1,6 +1,6 @@
 # NAND-to-CPU Simulator
 
-A planned offline project. Implementation has not started. The repository currently contains the product plan, technical specification and implementation backlog.
+An offline project. Only the scaffold exists: the plan, technical specification, backlog, module folders and a test command (`npm test`, Node 22 or newer, no dependencies). Product behaviour has not been implemented.
 
 ## Plan
 
