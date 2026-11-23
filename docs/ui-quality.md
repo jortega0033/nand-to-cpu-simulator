@@ -19,4 +19,5 @@ These ten rules are binding for every screen and every piece of user-facing text
 - User-facing copy, documentation and pull request text go through the `unslop` skill before the pull request is opened.
 - In this project the lab shows proposed and committed values, status (halted, faulted, paused) and a 16x16 display. Mark them with text labels and plain type weight, not with tinted boxes, and never by colour alone.
 - Colours, type, spacing and motion come from the design tokens in [design-tokens.md](design-tokens.md); new UI adds no colour literals.
+- Rule 8's accent is `--primary`, used only for the primary action, the current-step marker and the current selection (owner decision of 2026-11-23). `--focus` is exempt, and contrast and no-colour-alone checks cover both themes (orchestrator recommendation, adopted under the owner's delegation). See [design-tokens.md](design-tokens.md) and decision 14 in [owner-decisions.md](owner-decisions.md).
 - The roles Frontend Developer, Accessibility Auditor, Code Reviewer and Reality Checker name this file in their checklists.
