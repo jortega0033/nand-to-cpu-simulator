@@ -1,0 +1,14 @@
+{
+  "name": "nand-to-cpu-simulator",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Offline teaching simulator: NAND gates to a 16-bit instructional CPU, with a reference-interpreter comparison.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test",
+    "start": "node src/server/main.js"
+  }
+}
