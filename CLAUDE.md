@@ -53,7 +53,7 @@ Rows marked real run today (scaffold). Rows marked planned do not. Names are pro
 
 ## Layout
 
-Created by the scaffold: `src/isa/`, `src/reference/`, `src/circuit/`, `src/gate/`, `src/trace/`, `src/compare/`, `src/asm/`, `src/server/main.js`, `scripts/`, `test/<module>/`. Not created yet: `web/`, `fixtures/`, `src/stub/` (created by #12 and #13). Short version; the detail and the dependency rules are in [docs/architecture.md](docs/architecture.md).
+Created by the scaffold: `src/isa/`, `src/reference/`, `src/circuit/`, `src/gate/`, `src/trace/`, `src/compare/`, `src/asm/`, `src/server/main.js`, `scripts/`, `test/<module>/`. Not created yet: `web/` (placeholder by #11, page by #13), `fixtures/` and `src/stub/` (#12). Short version; the detail and the dependency rules are in [docs/architecture.md](docs/architecture.md).
 
 - `src/isa/`: instruction definitions, bit-width rules, state and record schemas (the only code both CPU models may import).
 - `src/reference/`: instruction-level reference interpreter.
