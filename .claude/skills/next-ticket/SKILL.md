@@ -14,7 +14,7 @@ Labels: `status:ready`, `status:blocked`, `status:in-progress`, `needs-decision`
 ## 1. Refresh the queue
 
 - `gh issue list --label status:blocked --state open`, then `gh issue view` each one: when all blockers are closed, relabel it `status:ready` (remove `status:blocked`).
-- Parents: a parent (a `tracking` ticket or one with sub-issues) whose sub-issues are all closed is closed with a comment naming them.
+- Parents: a parent (a `tracking` ticket or one with sub-issues) whose sub-issues are all closed is closed with a comment naming them. A ticket with no sub-issues is never closed by this step.
 
 ## 2. Pick the ticket
 
