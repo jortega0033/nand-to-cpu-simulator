@@ -43,5 +43,5 @@ The owner accepted the goal and each suggestion below. They apply from the phase
 | Decision | Implemented in |
 |---|---|
 | The repository has a program goal above phase 1: a whole computer from NAND gates to an operating system, in six phases. | Program issue #39 |
-| The teaching ISA is 16-bit. Suggested: keep it for M1 and add RISC-V beside it. | Program issue #39 |
+| The teaching ISA is 16-bit. Suggested: keep it for phase 1 and add RISC-V beside it. | Program issue #39 |
 | Official tests are open source. Suggested: check the licence, fetch at a pinned release. | Program issue #39 |
