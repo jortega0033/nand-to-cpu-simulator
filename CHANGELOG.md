@@ -6,4 +6,5 @@ All notable changes to this project are recorded here, following the [Keep a Cha
 
 ### Added
 
+- Program goal, score and phases 1 to 6 (#39).
 - Delivery tooling: review gate hook, CI, pull request and issue templates, `/next-ticket` driver, UI and writing skills.
