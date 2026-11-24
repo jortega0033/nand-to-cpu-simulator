@@ -35,3 +35,13 @@ Issue numbers: E28-0 is #8 and E28-7 is #9; the epic table lists them.
 - D8 (#5): mnemonics and registers case-insensitive, labels case-sensitive ASCII, at most 20 diagnostics.
 - D9 (#8): default port 8280; `--port 0` picks a free port.
 - D10 (all): the technical specification text is the contract for reset and commit-edge semantics; if it is ambiguous, stop and comment on the issue.
+
+## Program decisions (owner, 2026-11-24)
+
+The owner accepted the goal and each suggestion below. They apply from the phase they name; the rules of `CLAUDE.md` hold for phase 1 as written.
+
+| Decision | Implemented in |
+|---|---|
+| The repository has a program goal above phase 1: a whole computer from NAND gates to an operating system, in six phases. | Program issue #39 |
+| The teaching ISA is 16-bit. Suggested: keep it for M1 and add RISC-V beside it. | Program issue #39 |
+| Official tests are open source. Suggested: check the licence, fetch at a pinned release. | Program issue #39 |
